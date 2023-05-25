@@ -2,6 +2,7 @@ import os
 import requests
 import firebase_admin
 from firebase_admin import credentials, firestore
+import hashlib
 
 
 KEY = os.getenv('NEWS_API_KEY')
@@ -14,7 +15,7 @@ db = firestore.client()
 curr_page = "https://newsdata.io/api/1/news?apikey="+ KEY +"&country=ca&language=en"
 
 page_no = 1
-while page_no <= 1 : 
+while page_no <= 5 : 
     response = requests.get(curr_page).json()
 
     for article in response['results']:
@@ -30,8 +31,10 @@ while page_no <= 1 :
         category = article['category']
         country = article['country']
         language = article['language']
-        docID = str(hash(link))
-
+        m = hashlib.md5()
+        m.update(title.encode('utf-8'))
+        docID = str(m.hexdigest())
+        print(docID)
         data = {
             "title" : title,
             "link" : link ,
@@ -48,7 +51,7 @@ while page_no <= 1 :
         }
 
 
-        print(docID)
+        print("title: ",docID)
         print(pubDate)
         collection = db.collection(pubDate)
         doc = collection.document(docID)
@@ -65,7 +68,7 @@ while page_no <= 1 :
 
     
     # else in pubdate collection add the link doc 
-
+    # break
     page_no += 1
     if  response['nextPage'] : 
         curr_page = "https://newsdata.io/api/1/news?apikey="+ KEY +"&country=ca&language=en&page=" + response['nextPage']
