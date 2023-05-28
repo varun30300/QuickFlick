@@ -17,7 +17,8 @@ app.get('/', (req, res) => {
 
 app.get('/headlines', async (req, res) => {
     
-    const today = await db.collection('2023-05-26').get();
+    const latestDate = (await db.collection("latest").doc("solo").get()).data()['date'];
+    const today = await db.collection(latestDate).get();
     var size = 0;
     var todayReturnObj = []
     today.docs.map(doc => {

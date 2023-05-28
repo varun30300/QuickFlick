@@ -6,8 +6,7 @@ cred = credentials.Certificate("quickflick-19fdd-11e52bcd6a8b.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
-pubDate = "2023-05-27"
+pubDate = "2023-05-28"
 
-a = dt.strptime(pubDate, "%y/%m/%d")
-
-print(a)
+collection = db.collection(pubDate).get()
+print(len(collection))

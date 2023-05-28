@@ -55,7 +55,12 @@ while page_no <= 5 :
         print("title: ",docID)
         print(pubDate)
         collection = db.collection(pubDate)
+        
+        if len(collection.get()) == 0:
+            latest = db.collection("latest").document("solo").set({"date":pubDate})
         # check for get, if length of get is 0, this is the latest news date
+
+
         doc = collection.document(docID)
         
 
