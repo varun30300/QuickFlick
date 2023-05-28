@@ -11,7 +11,7 @@ cred = credentials.Certificate("quickflick-19fdd-11e52bcd6a8b.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
-# reading the first page 
+# reading the first page
 curr_page = "https://newsdata.io/api/1/news?apikey="+ KEY +"&country=ca&language=en"
 
 page_no = 1
@@ -31,10 +31,11 @@ while page_no <= 5 :
         category = article['category']
         country = article['country']
         language = article['language']
+
         m = hashlib.md5()
         m.update(title.encode('utf-8'))
         docID = str(m.hexdigest())
-        print(docID)
+        # print(docID)
         data = {
             "title" : title,
             "link" : link ,
@@ -54,6 +55,7 @@ while page_no <= 5 :
         print("title: ",docID)
         print(pubDate)
         collection = db.collection(pubDate)
+        # check for get, if length of get is 0, this is the latest news date
         doc = collection.document(docID)
         
 
