@@ -3,9 +3,11 @@ import requests
 import firebase_admin
 from firebase_admin import credentials, firestore
 import hashlib
+import openai
 
 
 KEY = os.getenv('NEWS_API_KEY')
+openai.api_key = os.getenv("NewsSummarization")
 
 cred = credentials.Certificate("quickflick-19fdd-11e52bcd6a8b.json")
 firebase_admin.initialize_app(cred)
@@ -32,9 +34,30 @@ while page_no <= 5 :
         country = article['country']
         language = article['language']
 
+        if content is not None:
+            gptResponse = openai.Completion.create(
+                model="text-davinci-003",
+                prompt=content+"\n\nTl;dr",
+                temperature=1,
+                max_tokens=200,
+                top_p=1.0,
+                frequency_penalty=0.0,
+                presence_penalty=1
+            )
+            print("BAMMM, ur life summarized")
+
+        else :
+            print("Le content ceat null")
+        
+        summarization = gptResponse["choices"][0]["text"]
+
+        
+        # hashing the title to generate a unique id
         m = hashlib.md5()
         m.update(title.encode('utf-8'))
         docID = str(m.hexdigest())
+        
+
         # print(docID)
         data = {
             "docId" : docID,
@@ -49,7 +72,8 @@ while page_no <= 5 :
             "source_id" : source_id, 
             "category" : category, 
             "country" : country, 
-            "language" : language
+            "language" : language,
+            "summarization" : summarization
         }
 
 

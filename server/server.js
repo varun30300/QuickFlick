@@ -4,7 +4,7 @@ const fs = require('firebase-admin');
 const port = 5000;
 
 const app = express();
-const temp = process.env.NEWS_API_KEY;
+// const temp = process.env.NEWS_API_KEY;
 const serviceAccount = require('./quickflick-19fdd-11e52bcd6a8b.json');
 fs.initializeApp({
     credential: fs.credential.cert(serviceAccount)

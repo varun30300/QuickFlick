@@ -1,12 +1,5 @@
-import firebase_admin
-from firebase_admin import credentials, firestore
-from datetime import datetime as dt
+# test =  "    :   ,./, ./,    heylow broooooooooooooooooo"
 
-cred = credentials.Certificate("quickflick-19fdd-11e52bcd6a8b.json")
-firebase_admin.initialize_app(cred)
-db = firestore.client()
+# while ((int(test[0]) >= 97 and  ))
 
-pubDate = "2023-05-28"
-
-collection = db.collection(pubDate).get()
-print(len(collection))
+# print(test)
