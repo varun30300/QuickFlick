@@ -1,6 +1,6 @@
 # QuickFlix News Summarizer
 
-Welcome to QuickFlix News Summarizer, a Flutter-based application that extracts news articles, summarizes them using the OpenAI API, and displays the summary in 60 words or less.
+QuickFlixis  a Flutter-based application that extracts news articles, summarizes them using the OpenAI API, and displays the summary in 60 words or less.
 
 ## Features
 
